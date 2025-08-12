@@ -111,11 +111,21 @@
   
   /**
    * The mouseClicked() function is called once after a mouse button is pressed
-   * and then released. We use this to reset the drawing.
+   * and then released. We use this to reset the drawing or save it.
    */
   function mouseClicked() {
-    // Call the setup function to reset the canvas and regenerate the particles
-    setup();
+    const centralAreaDivisor = window.innerWidth > 768 ? 3 : 4.5;
+    const centralAreaRadius = height / centralAreaDivisor;
+    const mouseDistanceFromCenter = dist(width / 2, height / 2, mouseX, mouseY);
+    
+    // Check if the mouse click was inside the central circle
+    if (mouseDistanceFromCenter < centralAreaRadius) {
+        // If inside, reset the canvas and regenerate particles
+        setup();
+    } else {
+        // If outside, save the image
+        saveCanvas('Laniakea', 'png');
+    }
   }
   
   /**
