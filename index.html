@@ -36,10 +36,14 @@
    */
 
   function setup() {
+    // The createCanvas() function uses windowWidth and windowHeight to make the canvas responsive.
     createCanvas(windowWidth, windowHeight);
     background(20);
     angleMode(DEGREES);
     noiseDetail(1);
+	
+	// Reset the points array to clear the old particles
+    points = [];
 
 	// Initializing particle density and spacing
     var density = 50;
@@ -53,7 +57,7 @@
       }
     }
 
-	// Set up random color ranges for the particles
+	// Set up new random color ranges for the particles
     r1 = random(255);
     r2 = random(255);
     g1 = random(255);
@@ -106,10 +110,11 @@
   
   /**
    * The mouseClicked() function is called once after a mouse button is pressed
-   * and then released. We use this to save the current canvas as a PNG.
+   * and then released. We use this to reset the drawing.
    */
   function mouseClicked() {
-    saveCanvas('Laniakea', 'png');
+    // Call the setup function to reset the canvas and regenerate the particles
+    setup();
   }
   
   /**
@@ -117,6 +122,7 @@
    * We use this to make the canvas responsive.
    */
   function windowResized() {
+    // This function automatically adjusts the canvas size when the window is resized.
     resizeCanvas(windowWidth, windowHeight);
   }
 </script>
