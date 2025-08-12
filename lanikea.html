@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Laniakea</title>
+  <style>
+    /* Make canvas fill screen and no margin */
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: black;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.min.js"></script>
+</head>
+<body>
+
+<script>
+  // Global variables for the sketch
+  var points = [];
+  var mult = 0.005; // The multiplier for the noise function, which controls the "flow"
+
+  var r1, r2; // Color range for red
+  var g1, g2; // Color range for green
+  var b1, b2; // Color range for blue
+  
+  /**
+   * The setup() function is called once when the program starts.
+   * This is where you initialize the canvas, set up variables, and do
+   * any one-time configuration.
+   */
+
+  function setup() {
+    createCanvas(windowWidth, windowHeight);
+    background(20);
+    angleMode(DEGREES);
+    noiseDetail(1);
+
+	// Initializing particle density and spacing
+    var density = 50;
+    var space = height / density;
+
+	// Populate the points array with initial positions
+    for (var x = 0; x < width; x += space / 2) {
+      for (var y = 0; y < height; y += space * 2) {
+        var p = createVector(x + random(-100, 100), y + random(-100, 100));
+        points.push(p);
+      }
+    }
+
+	// Set up random color ranges for the particles
+    r1 = random(255);
+    r2 = random(255);
+    g1 = random(100, 200);
+    g2 = random(100, 200);
+    b1 = random(255);
+    b2 = random(255);
+
+	// Randomize the noise multiplier
+    mult = random(0.002, 0.01);
+  }
+
+/**
+   * The draw() function is called continuously until the program is stopped.
+   * This is where you put the code that creates the animation.
+   */
+
+  function draw() {
+    noStroke();
+    // Decrease the alpha value from 20 to 5 to make the trails longer and more visible
+    // background(0, 20);  // Slightly fade previous frame for trails effect
+
+	// Loop through each point in the points array
+    for (var i = 0; i < points.length; i++) {
+
+	  // Map the particle's position to a color from the defined range
+      var r = map(points[i].x, 0, width, r1, r2);
+      var g = map(points[i].x, 0, height, g1, g2);
+      var b = map(points[i].x, 0, width, b1, b2);
+
+	  // Create a brighter alpha value for the particles themselves
+      var alpha = map(dist(width / 2, height / 2, points[i].x, points[i].y), 0, height / 2, 255, 0);
+	  
+	  // Set the fill color with the mapped RGB and alpha values
+      fill(r, g, b, alpha);
+
+	  // Map the noise value to an angle for movement direction
+      var angle = map(noise(points[i].x * mult, points[i].y * mult), 0, 1, 0, 720);
+
+	  // Move the particle in the direction of the calculated angle
+      points[i].add(createVector(cos(angle), sin(angle)));
+
+
+	  // Draw an ellipse (or circle) for the particle if it's within the center area
+      // Increased the size from 0.5 to 2 to make them more visible
+      if (dist(width / 2, height / 2, points[i].x, points[i].y) < height / 3) {
+        ellipse(points[i].x, points[i].y, 0.5);
+      }
+    }
+  }
+  
+  /**
+   * The mouseClicked() function is called once after a mouse button is pressed
+   * and then released. We use this to save the current canvas as a PNG.
+   */
+  function mouseClicked() {
+    saveCanvas('Laniakea', 'png');
+  }
+  
+  /**
+   * The windowResized() function is called whenever the browser window is resized.
+   * We use this to make the canvas responsive.
+   */
+  function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+  }
+</script>
+
+</body>
+</html>
