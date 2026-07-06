@@ -117,14 +117,6 @@ export default class LaniakeaExtension extends Extension {
             this,
         );
 
-        if (Main.screenShield) {
-            Main.screenShield.connectObject(
-                'wake-up-screen',
-                () => this._scheduleReloadDrawing(),
-                this,
-            );
-        }
-
         this._launchRenderer();
     }
 
@@ -297,7 +289,6 @@ export default class LaniakeaExtension extends Extension {
 
         Main.layoutManager.disconnectObject(this);
         this._loginManager?.disconnectObject(this);
-        Main.screenShield?.disconnectObject(this);
         this._settings?.disconnectObject(this);
 
         this._override?.disable();
