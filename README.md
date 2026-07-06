@@ -1,3 +1,6 @@
+https://github.com/user-attachments/assets/c1d8d34d-ac2f-40dd-99d9-2815fbca244c
+
+
 # <img src="https://github.com/visnudeva/Laniakea/blob/main/docs/assets/logo.png?raw=true" width="100"> Laniakea
 
 **A GNOME Shell extension that turns your desktop into a relaxing generative live wallpaper.**
