@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.laniakea" path="/org/gnome/shell/extensions/laniakea/">
+    <key name="startup-delay" type="i">
+      <default>500</default>
+      <summary>Startup delay in milliseconds</summary>
+    </key>
+    <key name="draw-mask-mode" type="s">
+      <default>'circle'</default>
+      <summary>Shape limiting where particles are drawn</summary>
+    </key>
+  </schema>
+</schemalist>
