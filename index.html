@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Laniakea</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: black;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+  <script src="maskConfig.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+</head>
+<body>
+
+<script>
+  var points = [];
+  var mult = 0.005;
+
+  var r1, r2;
+  var g1, g2;
+  var b1, b2;
+
+  window.LANIAKEA_CONFIG = {
+    maskMode: 'circle',
+  };
+
+  function applyLaniakeaConfig() {
+    if (typeof setup === 'function')
+      setup();
+  }
+
+  function initPoints() {
+    points = [];
+
+    var density = 50;
+    var space = height / density;
+
+    for (var x = 0; x < width; x += space / 2) {
+      for (var y = 0; y < height; y += space * 2) {
+        var p = createVector(x + random(-100, 100), y + random(-100, 100));
+        points.push(p);
+      }
+    }
+  }
+
+  function initColors() {
+    r1 = random(255);
+    r2 = random(255);
+    g1 = random(255);
+    g2 = random(255);
+    b1 = random(255);
+    b2 = random(255);
+
+    mult = random(0.002, 0.01);
+  }
+
+  function stepPoints() {
+    for (var i = 0; i < points.length; i++) {
+      var r = map(points[i].x, 0, width, r1, r2);
+      var g = map(points[i].x, 0, height, g1, g2);
+      var b = map(points[i].x, 0, width, b1, b2);
+
+      var alpha = map(
+        dist(width / 2, height / 2, points[i].x, points[i].y),
+        0,
+        height / 2,
+        255,
+        0,
+      );
+
+      fill(r, g, b, alpha);
+
+      var angle = map(
+        noise(points[i].x * mult, points[i].y * mult),
+        0,
+        1,
+        0,
+        720,
+      );
+
+      points[i].add(createVector(cos(angle), sin(angle)));
+
+      if (isInsideDrawMask(points[i].x, points[i].y))
+        ellipse(points[i].x, points[i].y, 0.5);
+    }
+  }
+
+  function resetDrawing() {
+    if (typeof width === 'undefined' || width === 0)
+      return;
+
+    background(20);
+    initPoints();
+    initColors();
+
+    if (typeof loop === 'function')
+      loop();
+  }
+
+  function installResumeHandler() {
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden)
+        resetDrawing();
+    });
+  }
+
+  function isInsideDrawMask(x, y) {
+    return LaniakeaMask.isInsideMask(
+      x,
+      y,
+      width,
+      height,
+      window.LANIAKEA_CONFIG.maskMode,
+    );
+  }
+
+  function setup() {
+    createCanvas(windowWidth, windowHeight);
+    background(20);
+    angleMode(DEGREES);
+    noiseDetail(1);
+
+    initPoints();
+    initColors();
+    installResumeHandler();
+  }
+
+  function draw() {
+    noStroke();
+    stepPoints();
+  }
+
+  function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+  }
+</script>
+
+</body>
+</html>

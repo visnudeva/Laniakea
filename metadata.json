@@ -1,0 +1,12 @@
+{
+  "uuid": "Laniakea@visnudeva.github.io",
+  "name": "Laniakea",
+  "description": "Generative live wallpaper with a new generated pattern on click, after suspend and at every login.",
+  "shell-version": ["48", "49", "50"],
+  "version": 1,
+  "url": "https://github.com/visnudeva/Laniakea",
+  "settings-schema": "org.gnome.shell.extensions.laniakea",
+  "donations": {
+    "kofi": "visnu_deva"
+  }
+}
