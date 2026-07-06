@@ -1,6 +1,6 @@
 # <img src="https://github.com/visnudeva/Laniakea/blob/main/docs/assets/logo.png?raw=true" width="100"> Laniakea
 
-**A GNOME Shell extension that turns your desktop into a generative live wallpaper.**
+**A GNOME Shell extension that turns your desktop into a relaxing generative live wallpaper.**
 
 Laniakea renders a flowing p5.js particle field behind your windows and panels. Each session starts with a fresh random pattern at login, and you can click the masked area on your desktop to generate a new one anytime.
 
