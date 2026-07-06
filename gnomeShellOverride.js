@@ -35,9 +35,6 @@ export class GnomeShellOverride {
         if (laters) {
             laters.add(Meta.LaterType.BEFORE_REDRAW, () => {
                 Main.layoutManager._updateBackgrounds();
-                if (Main.screenShield?._dialog?._updateBackgrounds != null)
-                    Main.screenShield._dialog._updateBackgrounds();
-
                 Main.overview?._overview?._controls?._workspacesDisplay?._updateWorkspacesViews?.();
                 return GLib.SOURCE_REMOVE;
             });
@@ -53,11 +50,6 @@ export class GnomeShellOverride {
             originalMethod => {
                 return function () {
                     const backgroundActor = originalMethod.call(this);
-
-                    const isLockScreen =
-                        this._container.style_class?.includes('screen-shield-background') ?? false;
-                    if (isLockScreen && !thisRef._settings?.get_boolean('show-on-lock-screen'))
-                        return backgroundActor;
 
                     this.videoActor = new Wallpaper.LiveWallpaper(
                         backgroundActor,
@@ -196,14 +188,6 @@ export class GnomeShellOverride {
                 };
             },
         );
-
-        if (this._settings) {
-            this._settings.connectObject(
-                'changed::show-on-lock-screen',
-                () => this._reloadBackgrounds(),
-                this,
-            );
-        }
 
         this._reloadBackgrounds();
     }
