@@ -9,10 +9,9 @@ Laniakea renders a flowing p5.js particle field behind your windows and panels. 
 - **Generative flow-field wallpaper** — colorful particles drift along a Perlin-noise vector field
 - **New pattern on every login** — random colors, density, and flow parameters each time
 - **Click to regenerate** — primary-click inside the shape mask to reset the drawing
-- **Shape mask** — limit where particles are drawn (circle, triangles, diamond, hexagon, rectangles, or full screen)
+- **Shape mask** — limit where particles are drawn (circle, triangles, diamond, hexagon, rectangles, or wide cicle)
 - **Multi-monitor** — one renderer window per display
 - **Resume-aware** — redraws after sleep, screen wake, and monitor changes
-- **Lock screen support** — can appear on the lock screen background (enabled by default)
 
 ## Customization
 
@@ -25,7 +24,7 @@ Open **Extensions → Laniakea → Settings** to choose a **Shape** that limits 
 | Diamond | Rotated square |
 | Hexagon | Regular hexagon |
 | Vertical / horizontal rectangle | Rectangular masks |
-| Wide | Full monitor — no mask |
+| Wide | Wide circle with shaded gradient |
 
 ## Installation
 
